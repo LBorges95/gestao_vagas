@@ -15,7 +15,6 @@ permissions:
   contents: read
 
 jobs:
-
   build:
     name: Compilar e testar
     runs-on: ubuntu-latest
@@ -25,7 +24,6 @@ jobs:
         working-directory: gestao_vagas
 
     steps:
-
       - name: Checkout do código
         uses: actions/checkout@v7
 
@@ -43,7 +41,6 @@ jobs:
       - name: Compilar e executar testes
         run: ./mvnw --batch-mode clean verify
 
-
   publish-image:
     name: Publicar imagem Docker
     runs-on: ubuntu-latest
@@ -51,10 +48,9 @@ jobs:
     needs:
       - build
 
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref == 'refs/heads/main'
 
     steps:
-
       - name: Checkout do código
         uses: actions/checkout@v7
 
